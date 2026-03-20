@@ -1,7 +1,7 @@
 import Stripe from 'stripe';
 
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '', {
-  apiVersion: '2026-02-25.clover',
+  apiVersion: '2025-12-18.acacia' as Stripe.LatestApiVersion,
 });
 
 export const PRO_PRICE_ID = process.env.STRIPE_PRO_PRICE_ID ?? '';

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { stripe, PRO_PRICE_ID } from '@/lib/stripe';
+import { getStripe, PRO_PRICE_ID } from '@/lib/stripe';
 
 export async function POST(req: NextRequest) {
   try {
@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
     }
 
-    const session = await stripe.checkout.sessions.create({
+    const session = await getStripe().checkout.sessions.create({
       mode: 'subscription',
       customer_email: email,
       line_items: [{ price: PRO_PRICE_ID, quantity: 1 }],

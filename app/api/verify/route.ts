@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { stripe } from '@/lib/stripe';
+import { getStripe } from '@/lib/stripe';
 
 export async function POST(req: NextRequest) {
   try {
@@ -10,10 +10,10 @@ export async function POST(req: NextRequest) {
     }
 
     // Search for active subscriptions by customer email
-    const customers = await stripe.customers.list({ email, limit: 5 });
+    const customers = await getStripe().customers.list({ email, limit: 5 });
 
     for (const customer of customers.data) {
-      const subscriptions = await stripe.subscriptions.list({
+      const subscriptions = await getStripe().subscriptions.list({
         customer: customer.id,
         status: 'active',
         limit: 5,
